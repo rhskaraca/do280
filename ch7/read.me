@@ -1,0 +1,42 @@
+section I 
+
+
+
+section II
+how can I update an Application
+in Openshift an application consists of sensitive data (secret), configuration data (configmap), persisten data/volume (persistent volume) and appliction code.
+Application code is the image and what developer normally does to upgrade the software is to create a newer image
+This process can be automated with CI/CD (including deploying in the prod platform)
+Deployment is the correct rsource in openshift for deploying an app. It includes all the necessary functionality for an app life cycle (Pod: includes image, resources, labels BUT no horizontal scaling and not restarted when the node gets down. Replicaset: horizontal scaling is possible. deployment: roll out/update is possible )
+Anyway, if we have a newer image we can update our deployment
+#containre-name must come from deployment yaml (oc describe deployment/myapp)
+oc set image deployment/myapp container-name=registry.access.redhat.com/ubi8/httpd-120:1-205
+
+even if we set a property of a deployment, it will re-deploy (rollout) the app automatically
+oc set env deployment/myapp MYENV=123
+oc set probe deployment/myapp --readiness-probe --http-get localhost://127.0.0.1:8080
+
+case I: if we want to change more than 1 aspect and get the updated app running
+Method I
+oc rollout pause deployment/myapp
+oc set image ...
+oc set env
+oc  rollout resume deployment/myapp
+Method II 
+oc create deployment myapp --image ... --replicas 0
+oc set ...
+#start with new settings
+oc scale deployment/myapp --replicas 5
+
+what happens when Openshift updates an app/deployment
+it progress acorrding to strategy
+RollingUpdate, default one, it creates new pods while deleting old ones. it is a phased approach to arrive new state. at some point, 2 versions work together during update. best to prevent downtimes
+recreate: it first deletes old version pods and create the deployment iwth the newer image. if old and newer can not coexist together, this strategy must be chosen
+
+
+
+
+
+
+
+

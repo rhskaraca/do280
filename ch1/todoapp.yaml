@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ 
+  labels:
+    app: todoapp
+  name: todoapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todoapp
+  strategy: {}
+  template:
+    metadata:
+     
+      labels:
+        app: todoapp
+    spec:
+      containers:
+      - env:
+        - name: USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: secret-todoapp-db
+              key: MYSQL_USER
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-todoapp-db
+              key: MYSQL_PASSWORD
+        - name: DBNAME
+          valueFrom:
+            secretKeyRef:
+              name: secret-todoapp-db
+              key: MYSQL_DATABASE
+        image: quay.io/selcukkaraca/todoapp:v1.0
+        name: todoapp
+        resources: {}
+

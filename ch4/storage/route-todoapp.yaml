@@ -1,0 +1,15 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+ 
+  labels:
+    app: todoapp
+  name: todoapp
+spec:
+  port:
+    targetPort: 5000
+  to:
+    kind: ""
+    name: todoapp
+    weight: null
+

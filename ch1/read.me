@@ -1,0 +1,19 @@
+#Part I: OCP or K8S app consists of several components
+#we have 
+#   deployments (todoapp and taskdb) 
+#   services (todoapp and taskdb), 
+#   route (todoapp), 
+#   secret (todoapp) and pvc (taskdb)
+oc create -f secret-todoapp.yaml,route-todoapp.yaml,svc-taskdb.yaml,svc-todoapp.yaml,taskdb.yaml,todoapp.yaml #OR oc apply -f '*.yaml'
+#now go web site and add some tasks
+#delete everything except the pvc
+oc delete all -l app=todoapp
+oc delete all -l app=taskdb
+#now recreate everyhing and add a task from web page and see all tasks are there
+oc apply -f '*.yaml'
+
+#delete all deployments BUT we need to delete pvc seperately. look at PV too, it must disappear
+oc delete all -l app=todoapp
+oc delete all -l app=taskdb
+oc delete pvc db
+oc get pv #because claim policy is delete, it is deleted when pvc releases the PV

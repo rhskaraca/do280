@@ -1,0 +1,16 @@
+#if you dont run it as kubedmin scc will be restricted and 80 port will not be bound
+apiVersion: v1
+kind: Pod
+metadata:
+  name: c1
+spec:
+  volumes:
+  - name: html
+    persistentVolumeClaim:
+      claimName: web
+  containers:
+  - name: 1st
+    image: nginx
+    volumeMounts:
+    - name: html
+      mountPath: /usr/share/nginx/html

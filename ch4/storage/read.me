@@ -1,0 +1,23 @@
+#part 1: show that pvc keeps mariaDB datafiles
+#create todoapp and taskdb
+oc apply -f route-todoapp.yaml,svc-taskdb.yaml,svc-todoapp.yaml,taskdb3.yaml,todoapp3.yaml #OR oc apply -f '*.yaml'
+#now go web site and add some tasks
+#delete everything except the pvc
+oc delete all -l app=todoapp
+oc delete all -l app=taskdb
+#now recreate everyhing and add a task from web page and see all tasks are there
+oc apply -f '*.yaml'
+
+#part 2: show "oc set volume" command. this command defines  a volume+volumeMount+pvc with a single command
+#create todoapp and taskdb-without-storage
+oc apply -f route-todoapp.yaml,svc-taskdb.yaml,svc-todoapp.yaml,taskdb3-wo-volume.yaml,todoapp3.yaml
+#create volume, volumeMount and pvc with the set volume command
+oc set volume deployment taskdb --add --name dbfiles --type pvc --claim-name  db --claim-mode rwo --claim-size 10Gi --mount-path /var/lib/mysql
+#now look at deployment and see that volume, volumeMounts are defined and look at pvc
+oc get deployment taskdb -o yaml
+oc get pvc
+#delete all deployments BUT we need to delete pvc seperately. look at PV too, it must disappear
+oc delete all -l app=todoapp
+oc delete all -l app=taskdb
+oc delete pvc db
+pc get pv
