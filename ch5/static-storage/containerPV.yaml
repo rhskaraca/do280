@@ -1,4 +1,4 @@
-#if you dont run it as kubedmin scc will be restricted and 80 port will not be bound
+#it wil run at port 8080
 apiVersion: v1
 kind: Pod
 metadata:

@@ -1,3 +1,5 @@
+#/tmp/data1 auto created. we may need to connect host and apply chcon -Rv -t container_file_t /tmp/data1
+#before this connect to host oc debug node/master01 and chrot /host
 kind: PersistentVolume
 apiVersion: v1
 metadata:

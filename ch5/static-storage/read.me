@@ -15,3 +15,5 @@ oc create -f containerPV.yaml
 oc port-forward c1 8080:80
 #usr web browser http://localhost:8080
 #delete the pvc and show that pv also has gone, reclaim policy is delete
+
+#part II: same example without PV. when pvc created, pv automatically will be created. just delete storageClassName: ""  
