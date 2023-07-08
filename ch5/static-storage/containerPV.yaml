@@ -10,7 +10,7 @@ spec:
       claimName: web
   containers:
   - name: 1st
-    image: nginx
+    image: registry.redhat.io/ubi8/httpd-24
     volumeMounts:
     - name: html
-      mountPath: /usr/share/nginx/html
+      mountPath: /var/www/html

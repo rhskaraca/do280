@@ -1,0 +1,16 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: web-hostpath
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  reclaimPolicy:
+    - Delete
+  hostPath:
+    path: "/tmp/data1"
+
