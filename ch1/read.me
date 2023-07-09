@@ -7,9 +7,15 @@
 #   secret (todoapp) and pvc (taskdb)
 oc create -f secret-todoapp.yaml,route-todoapp.yaml,svc-taskdb.yaml,svc-todoapp.yaml,taskdb-wov.yaml,todoapp.yaml #OR oc apply -f '*.yaml'
 #now go web site and add some tasks
+
+
 #delete everything except the pvc
+oc delete -f secret-todoapp.yaml,route-todoapp.yaml,svc-taskdb.yaml,svc-todoapp.yaml,taskdb-wov.yaml,todoapp.yaml 
+#OR
 oc delete all -l app=todoapp
 oc delete all -l app=taskdb
+
+#for persistent volume example. Not used in this chapter!
 #now recreate everyhing and add a task from web page and see all tasks are there
 oc apply -f '*.yaml'
 

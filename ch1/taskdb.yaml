@@ -31,7 +31,8 @@ spec:
           value: TASKDB
         - name: MYSQL_ROOT_PASSWORD
           value: abrakadabra
-        image: registry.redhat.io/rhel8/mariadb-105
+        #old image: registry.redhat.io/rhel8/mariadb-105
+        image: quay.io/selcukkaraca/mariadb-105:v1
         name: mariadb-105
         volumeMounts:
         - mountPath: /var/lib/mysql
