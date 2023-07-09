@@ -1,0 +1,27 @@
+#part I: 
+# images to be used after logged in OCP 
+# registry.ocp4.example.com:8443/rhel9/mysql-80:1-228
+# registry.ocp4.example.com:8443/ubi9/ubi
+# quay.io/selcukkaraca/hangman:v2
+# registry.access.redhat.com/ubi8/httpd-24:1-215
+
+#run a containerand inspect it!
+podman run -d  -p 8080:8080 registry.access.redhat.com/ubi9/httpd-24
+
+#outside (from host)
+df -h
+ls -l /tmp 
+ps naux
+#inside from container 
+podman exec -it podname /bin/bash 
+df -h
+ls -l /tmp 
+ps naux
+
+#write a container ch0/python
+cd ch0/hangman
+podman build -t quay.io/selcukkaraca/tcell-game:v1.0 .
+Podman login quay.io
+podman push quay.io/selcukkaraca/tcell-game:v1.0
+podman run -it --name hangman podman push quay.io/selcukkaraca/tcell-game:v1.0
+

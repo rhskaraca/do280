@@ -17,7 +17,7 @@ metadata:
   name: mysql-pv-claim
 spec:
   #for auto provisioning of PVs we will need a SC. write it here..
-  storageClassName: default
+  storageClassName: nfs-storage
   accessModes:
     - ReadWriteOnce
   resources:
@@ -27,7 +27,7 @@ spec:
 ---
 apiVersion: apps/v1
 # we selected statefulset as the type. It is more approprite for persistent data storage needs
-kind: deployment
+kind: Deployment
 metadata:
   labels:
     app: tododb
@@ -84,7 +84,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-   name: taskdb
+   name: tododb
 spec:
   ports:
   - port: 3306

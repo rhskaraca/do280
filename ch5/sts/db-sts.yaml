@@ -26,7 +26,7 @@ spec:
   #This will work with redhat sandbox environment. if you run this on another platform use another SC or use hostPath
   volumeClaimTemplates:
   - metadata:
-      name: mysql-pv-claim
+      name: mysql-db
     spec:
     #for auto provisioning of PVs we will need a SC. write it here..
       storageClassName: default
@@ -44,7 +44,7 @@ spec:
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
+          claimName: mysql-db
       containers:
       #normally we do not need to specify docker.io. but if we run it redhat sandbox, it defaults to quay.io and we need to specify it.
       - image: docker.io/mariadb:10.7
@@ -82,7 +82,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-   name: taskdb
+   name: tododb
 spec:
   ports:
   - port: 3306
