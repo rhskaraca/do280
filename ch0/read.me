@@ -25,3 +25,9 @@ Podman login quay.io
 podman push quay.io/selcukkaraca/tcell-game:v1.0
 podman run -it --name hangman podman push quay.io/selcukkaraca/tcell-game:v1.0
 
+#how OCP can work with regsitry.redhat.io
+#problem: registry.redhat.io requires OCP to authenticate first
+podman login --authfile=${HOME}/.docker/config.json registry.redhat.io
+mkdir -p  /var/lib/origin/.docker
+cp ~/.docker/config.json /var/lib/origin/.docker/config.json; 
+systemctl restart atomic-openshift-node #node will restart

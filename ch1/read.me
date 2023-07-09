@@ -5,7 +5,7 @@
 #   services (todoapp and taskdb), 
 #   route (todoapp), 
 #   secret (todoapp) and pvc (taskdb)
-oc create -f secret-todoapp.yaml,route-todoapp.yaml,svc-taskdb.yaml,svc-todoapp.yaml,taskdb.yaml,todoapp.yaml #OR oc apply -f '*.yaml'
+oc create -f secret-todoapp.yaml,route-todoapp.yaml,svc-taskdb.yaml,svc-todoapp.yaml,taskdb-wov.yaml,todoapp.yaml #OR oc apply -f '*.yaml'
 #now go web site and add some tasks
 #delete everything except the pvc
 oc delete all -l app=todoapp
