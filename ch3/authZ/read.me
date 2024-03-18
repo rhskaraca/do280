@@ -1,0 +1,15 @@
+oc get roles #this may also be clusterroles
+oc get users #and identities
+oc get rolebindings #this may also be clusterrolebindings. 
+oc describe rolebindings admin #see rolebinding in this namespaces
+
+#use users from htpasswd and assign them permissions to edit a project resources
+#as developer try to use project hayhay created by kubeadmin
+oc project hayhay # it must give permission error
+#give edit permission on project hayhay to user developer as kubeadmin
+oc  adm  policy add-role-to-user edit developer -n hayhay
+#now try to access again as developer
+oc project hayhay #it permits to use project
+oc new-app --name web httpd # it runs web server because you have edit permissions
+
+

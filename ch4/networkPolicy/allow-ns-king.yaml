@@ -1,0 +1,15 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: hayhay-net-policy-2
+spec:
+  podSelector: {}
+  ingress:
+  - from: 
+    - namespaceSelector: 
+        matchLabels:
+           name: king
+
+
+

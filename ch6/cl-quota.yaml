@@ -1,0 +1,12 @@
+apiVersion: quota.openshift.io/v1
+kind: ClusterResourceQuota
+metadata:
+  name: onecpu
+spec:
+  quota: 
+    hard:
+      limits.cpu: 1
+  selector: 
+    labels:
+      matchLabels:
+        env: dev

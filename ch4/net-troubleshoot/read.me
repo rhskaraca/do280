@@ -1,0 +1,26 @@
+#part 1: show that a flat netrwork is employed by default in Openshift
+#find image registry pod and IP adress
+oc get pods -o wide --all-namespaces | grep registry
+#create a debug pod in a diff namespace 
+oc debug
+ping REGISTRY_POD_IP #it is accessible
+
+#Part 2:service LB funcitonality
+#create math deployment and scale it to 4. access it with curl inside cluster
+oc create deployment math --image quay.io/selcukkaraca/calculator:1.1
+#create a svc
+oc expose deployment math --port 8080 --target-port=5000
+#now create a debug pod and access service
+oc debug 
+   curl http://SVC:8080 OR IP
+   nslookup math # DNS name resolution
+oc scale dpeloyment math --replicas 4
+curl http://svc:8080 | grep IP# it should show diff IPs
+
+#part 3 DNS funcitonality. use svcName.Namespace.svc.cluster.local to access any svc
+#lets access image-registry IP
+debug pod# nslookup image-registry.openshift-image-registry
+#check this IP from the svc name
+oc get svc --all-namespaces | grep registry
+
+#rht image: image quay.io/redhattraining/hello-world-nginx:v1.0

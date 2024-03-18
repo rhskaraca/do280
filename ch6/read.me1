@@ -1,0 +1,29 @@
+[student@workstation ~]$ oc create deployment math --image quay.io/selcukkaraca/adder:v1 --dry-run=client -o yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: math
+  name: math
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: math
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: math
+    spec:
+      containers:
+      - image: quay.io/selcukkaraca/adder:v1
+        name: adder
+        resources: 
+          requests:
+            cpu: 100m
+            memory: 300Mi
+          limits:
+            cpu: 200m
+            memory: 400Mi
+

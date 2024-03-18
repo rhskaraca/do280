@@ -1,3 +1,52 @@
+apiVersion: v1
+data:
+  MYSQL_DATABASE: VEFTS0RC
+  MYSQL_PASSWORD: dGFza3Bhc3M=
+  MYSQL_ROOT_PASSWORD: YWJyYWthZGFicmE=
+  MYSQL_USER: dGFza3VzZXI=
+kind: Secret
+metadata:
+  name: secret-todoapp-db
+type: Opaque
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  
+  labels:
+    app: todoapp
+  name: todoapp
+spec:
+  ports:
+  - port: 5000
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: todoapp
+
+
+
+
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+ 
+  labels:
+    app: todoapp
+  name: todoapp
+spec:
+  port:
+    targetPort: 5000
+  to:
+    kind: ""
+    name: todoapp
+    weight: null
+---
+
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

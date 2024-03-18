@@ -1,0 +1,12 @@
+lab start non-http-lb
+
+ile metalLB 2 IP ile hizmet vermeye baslar.
+192.168.50.20
+192.168.50.21
+
+bunları math projesine tanımlayark otomatik erildigini gorebiliriz.
+
+oc expose deployment math --type LoadBalancer --target-port 5000
+
+oc get svc #show that LB Ip is autmatically assigned
+

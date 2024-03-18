@@ -1,0 +1,20 @@
+
+#build the deployment of quay.io/selcukkaraca/calculator:1.0
+oc new-project math # create a new project
+oc create deployment math --image quay.io/selcukkaraca/calculator:1.0 --dry-run=client -o yaml
+#create a service manifest yaml
+oc create service clusterip calc --tcp 8080:5000 --dry-run=client -o yaml > svc_calc.yaml
+#expose service to outer world with a route
+oc expose svc calc -o yaml --dry-run=client > route_calc.yaml
+#use the following for the command
+#oc expose svc calc
+
+#part 1: expose math deployment to external world, HTTP traffic
+oc expose svc math --hostname genius.apps.ocp4.example.com #hostname is optional
+
+#part 2: expose math deployment to ext. world edge type HTTPS
+oc create route edge maths --service math #cert and key will be created by route autmmatically
+
+#debug pod can be used for tetsing connectivity
+oc debug -t deployment/todo-http \
+    --image registry.ocp4.example.com:8443/ubi8/ubi:8.4

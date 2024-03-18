@@ -1,0 +1,16 @@
+#lets create mysql DB as a template
+#show me the parameters
+oc process --parameters mysql-persistent -n openshift
+#create theDB with parameters
+oc new-app --template=mysql-persistent -p MYSQL_USER=taskuser -p MYSQL_PASSWORD=taskpass -p MYSQL_DATABASE=TASKDB -p MYSQL_ROOT_PASSWORD=abrakadabra -p VOLUME_CAPACITY=2Gi -p  DATABASE_SERVICE_NAME=taskdb
+
+Second method to create DB, first output to a manifest file
+oc process mysql-persistent -p MYSQL_USER=taskuser -p MYSQL_PASSWORD=taskpass -p MYSQL_DATABASE=TASKDB -p MYSQL_ROOT_PASSWORD=abrakadabra -p VOLUME_CAPACITY=2Gi -p  DATABASE_SERVICE_NAME=taskdb -o yaml > taskdb.yaml
+
+Oc apply -f taskdb
+#OR 2 steps in 1 step
+Oc process … | oc apply -f -
+Oc process will create k8s resource manifest with params applied
+
+#Create the App
+oc apply -f todoapp-only.yaml

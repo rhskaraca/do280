@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: mello
+  name: mello
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mello
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mello
+    spec:
+      containers:
+      - image: quay.io/redhattraining/hello-world-nginx:v1.0
+        name: hello-world-nginx
+        resources: 
+          requests:
+             cpu: 1000m
+             memory: 1500Mi
+          limits:
+             cpu: 1750m

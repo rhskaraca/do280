@@ -1,0 +1,17 @@
+#part 1 show with curl that all unauthenticated users are assigned to anonymous users
+curl -k https://api.crc.testing/api/v1/namespaces
+#part 2. login with kubeconfig. it is in the root's home
+#if we do not want to write --kubeconfig w ecan define env variable KUBECONFIG
+oc get nodes --kubeconfig .kubeconfig #username will be system:admin. kubeadmin is different and comes with oauth
+
+#Part 3: htpasswd auth
+#1- Create htpasswd provider # htpasswd command
+htpasswd -c -B -b htpasswd_file selcuk karaca
+#2- Create secret # using htpasswd file
+oc create secret generic ocp_users --from-file htpasswd=htpasswd_file -n openshift-config
+#3- assign htpasswd secret as an ID provider. use one of the 2 methods below
+oc edit oauth/cluster
+oc apply -f oauth.yml 
+#4- Authorize user/role with RBAC
+oc adm policy add-cluster-role-to-user cluster-admin admin
+

@@ -3,7 +3,6 @@ kind: PersistentVolumeClaim
 metadata:
   
   name: db
-  namespace: sandbox
  
 spec:
   accessModes:

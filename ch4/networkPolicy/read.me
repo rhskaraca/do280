@@ -1,0 +1,30 @@
+#scenario:
+#part 1: show that all access bw namespaces are allowed by default
+#part 2: deny all. even the pods in the same ns can not comm with each other
+#part 3: allow specific namespace to access pods 
+
+#part 1: show the effects of networkPolicies. 
+#create 2 projects and create 2 httpd apps in both of them
+#rsh to each one and show they can comm with each other freely
+#run deny-all np. pods, in that ns, are not accessible within and outisde of that ns
+#run allow-within-inside np, pod will communicate wit heach other inside the same projects
+#but route should not work in that case, we need to allow it
+
+#if we write a np, subnet (flat network model) is cancelled. and for the pods for which rule is valid
+# rules are evaluated before traffic
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: np1
+spec:
+   podSelector: {}
+
+   ingress:
+   - from:
+     - namespaceSelector:
+         matchLabels: 
+           rol: king
+
+#before labeling ns, try to access pods in the ns. then exec this rule and see onlythe ods covered by this rule
+#can access pods

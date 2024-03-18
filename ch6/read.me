@@ -1,0 +1,38 @@
+#scenario: create a container with high cpu request and limit it to 1 cpu and then 700m cpu. show consumption
+#show pod def. (kubectl apply -f https://k8s.io/examples/pods/resource/cpu-request-limit.yaml )
+cat cpu-request-limit.yaml
+oc create -f cpu-request-limit.yaml
+#we need at least 1 min to collect resource metrics
+oc adm top pod
+delete pod cpu-..
+#edit yaml file and lower the vaue from 1 cpu to 700m
+oc create -f cpu-request-limit.yaml
+oc adm top pod
+
+#scenario limit project resource usage (quota). if there is a quota but there is no resource speciifcation. pod s not created 
+oc apply -f quota.yaml
+#imperatively
+#oc create quota project-quota --hard services=10,cpu=1,memory=2Gi
+#create an app. this will not create any app. change resurces
+oc new-app --name hello --image quay.io/redhattraining/hello-world-nginx:v1.0
+oc edit deployment hello
+#add another app. pods will not be created
+oc apply -f helo-app.yaml
+#look at events and see the reason: exceeded quota.
+oc get events
+
+
+#scenario run new-app without any resources defined in it. becuase we have limit range which defines default values
+oc create -f limitrange.yaml
+#this will run this time. because there is quota and resource values comes from limit
+oc new-app --name hello --image quay.io/redhattraining/hello-world-nginx:v1.0
+#show limits
+oc describe limits
+
+#scenario for autoscale. create a busy deployment and create an hpa, look at pod numbers
+oc create -f cpu-scale.yaml
+oc aut oscale deployment cpu --min 1 --max 3 --cpu-percent 50
+#wait some time for metrics collection
+oc get hpa
+oc adm top pod
+
