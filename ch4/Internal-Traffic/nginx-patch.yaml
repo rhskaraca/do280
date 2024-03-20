@@ -1,0 +1,19 @@
+spec:
+  template:
+    spec:
+      containers:
+      - image: quay.io/redhattraining/hello-world-nginx:latest
+        name: hello-world-nginx
+        volumeMounts:
+        - name: hello-volume
+          mountPath: /etc/pki/nginx/
+      volumes:
+      - name: hello-volume
+        secret:
+          defaultMode: 420
+          secretName: hello-secret
+          items:
+          - key: tls.crt
+            path: server.crt
+          - key: tls.key
+            path: private/server.key

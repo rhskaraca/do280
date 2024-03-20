@@ -1,0 +1,20 @@
+#create deployment
+oc apply -f nginx-erver.yaml
+#create service
+oc expose deployment nginx
+#trigger secret creation
+oc annotate svc nginx service.beta.openshift.io/serving-cert-secret-name=hello-secret
+#patch the deployment
+oc patch deployment nginx --patch-file nginx-patch.yaml 
+
+
+####
+#for the client
+#create a cm (configMap) which includes the ca-bundle
+oc create cm hello-cm
+#now inject ca-bundle in this cm
+oc annotate cm hello-cm service.beta.openshift.io/inject-cabundle=true
+#Now use this cm inside the client pod
+
+
+

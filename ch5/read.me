@@ -10,3 +10,11 @@ oc expose deployment math --type LoadBalancer --target-port 5000
 
 oc get svc #show that LB Ip is autmatically assigned
 
+###MULTUS
+
+#create net attach. definition
+oc apply -f nad.yaml $it is namespaced. now pods in this ns can have additional nets 
+# make pod have additional net card 
+oc patch --patch-file nad-patch.yaml
+#look at the 2nd NIC..
+oc get pod ... -o yaml

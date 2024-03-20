@@ -15,6 +15,6 @@ oc expose svc math --hostname genius.apps.ocp4.example.com #hostname is optional
 #part 2: expose math deployment to ext. world edge type HTTPS
 oc create route edge maths --service math #cert and key will be created by route autmmatically
 
-#debug pod can be used for tetsing connectivity
+#debug pod can be used for testing connectivity
 oc debug -t deployment/todo-http \
     --image registry.ocp4.example.com:8443/ubi8/ubi:8.4
