@@ -7,10 +7,10 @@ commonLabels:
   env: testing
 namePrefix: testing-
 secretGenerator:
-  name: secret-todoapp-db
+- name: secret-todoapp-db
   literals:
-  - MYSQL_DATABASE= gorev
-  - MYSQL_PASSWORD= gorevParola
-  - MYSQL_ROOT_PASSWORD= gorevRoot
-  - MYSQL_USER= gorevKullanici
+  - MYSQL_DATABASE=gorev
+  - MYSQL_PASSWORD=gorevParola
+  - MYSQL_ROOT_PASSWORD=gorevRoot
+  - MYSQL_USER=gorevKullanici
  
